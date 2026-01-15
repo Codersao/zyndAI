@@ -159,4 +159,8 @@ APPROVED / HOLD / REJECTED
 </main>
 
 <footer>
-  Built with
+  Built with ❤️ for the Future of Work • Hackathon Prototype
+</footer>
+
+</body>
+</html>
