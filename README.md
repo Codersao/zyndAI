@@ -5,187 +5,98 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>FreelanceGuard – AI-Verified Fair Hiring</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
   <style>
-    :root {
-      --bg-primary: #0a0f1a;
-      --bg-secondary: #111827;
-      --text-primary: #f1f5f9;
-      --text-secondary: #cbd5e1;
-      --accent: #EA4B71;          /* n8n-inspired vivid pink */
-      --accent-dark: #c73d5f;
-      --border: #1e293b;
-      --code-bg: #02060f;
-      --highlight-border: #EA4B71;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen;
+      background: #0f172a;
+      color: #e5e7eb;
       line-height: 1.7;
       margin: 0;
       padding: 0;
     }
 
     header {
-      background: linear-gradient(135deg, #1e3a8a, #7c3aed, #c026d3);
-      padding: 5rem 1.5rem 4rem;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      padding: 3rem 1.5rem;
       text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    header::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(circle at 30% 70%, rgba(234,75,113,0.18), transparent 60%);
-      pointer-events: none;
+      color: white;
     }
 
     header h1 {
-      font-size: 3.8rem;
-      font-weight: 700;
-      margin: 0 0 0.8rem;
-      letter-spacing: -0.02em;
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
     }
 
     header p {
-      font-size: 1.35rem;
-      max-width: 680px;
-      margin: 0 auto 0.6rem;
+      font-size: 1.2rem;
       opacity: 0.95;
     }
 
-    header .tagline {
-      font-size: 1.1rem;
-      font-weight: 500;
-      color: #e0f2fe;
-    }
-
     main {
-      max-width: 980px;
-      margin: -3rem auto 0;
-      padding: 0 1.5rem 4rem;
+      max-width: 900px;
+      margin: auto;
+      padding: 2rem 1.5rem;
     }
 
     section {
-      margin-bottom: 4.5rem;
-      background: var(--bg-secondary);
-      padding: 2.5rem;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      margin-bottom: 3rem;
     }
 
     h2 {
-      color: var(--accent);
-      font-size: 2.1rem;
-      font-weight: 600;
-      margin: 0 0 1.4rem;
-      padding-bottom: 0.6rem;
-      border-bottom: 2px solid rgba(234,75,113,0.18);
+      color: #93c5fd;
+      border-bottom: 2px solid #1e293b;
+      padding-bottom: 0.3rem;
+      margin-bottom: 1rem;
     }
 
     ul {
-      padding-left: 1.4rem;
-      list-style: none;
+      padding-left: 1.2rem;
     }
 
-    ul li {
-      margin-bottom: 0.9rem;
-      position: relative;
-      padding-left: 1.8rem;
+    li {
+      margin-bottom: 0.5rem;
     }
 
-    ul li::before {
-      content: "→";
-      color: var(--accent);
-      position: absolute;
-      left: 0;
-      font-weight: bold;
-    }
-
-    .highlight {
-      background: rgba(234,75,113,0.08);
-      border-left: 4px solid var(--highlight-border);
-      padding: 1.4rem 1.8rem;
+    code, pre {
+      background: #020617;
       border-radius: 8px;
-      margin: 1.5rem 0;
-      font-weight: 500;
-      color: #fce7f3;
-    }
-
-    pre, code {
-      background: var(--code-bg);
-      border-radius: 10px;
-      padding: 1.4rem;
-      font-size: 0.95rem;
+      padding: 1rem;
+      display: block;
       overflow-x: auto;
-      border: 1px solid #1e293b;
-      color: #e2e8f0;
-    }
-
-    pre {
-      position: relative;
+      color: #e5e7eb;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 1.5rem 0;
-      font-size: 0.95rem;
+      margin-top: 1rem;
     }
 
     th, td {
-      border: 1px solid var(--border);
-      padding: 1rem 1.2rem;
+      border: 1px solid #1e293b;
+      padding: 0.8rem;
       text-align: left;
     }
 
     th {
       background: #1e293b;
-      color: var(--accent);
-      font-weight: 600;
+      color: #93c5fd;
     }
 
     footer {
       text-align: center;
-      padding: 3rem 1.5rem;
+      padding: 2rem;
+      background: #020617;
       color: #94a3b8;
-      font-size: 0.95rem;
-      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
     }
 
-    .btn-demo {
-      display: inline-block;
-      background: var(--accent);
-      color: white;
-      padding: 0.9rem 2rem;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      margin-top: 1.5rem;
-      transition: all 0.2s;
-    }
-
-    .btn-demo:hover {
-      background: var(--accent-dark);
-      transform: translateY(-2px);
-    }
-
-    @media (max-width: 768px) {
-      header h1 { font-size: 2.8rem; }
-      header p { font-size: 1.15rem; }
-      section { padding: 1.8rem; }
+    .highlight {
+      background: #020617;
+      padding: 1rem;
+      border-left: 4px solid #22c55e;
+      border-radius: 6px;
+      margin-top: 1rem;
     }
   </style>
 </head>
@@ -195,7 +106,7 @@
 <header>
   <h1>🚀 FreelanceGuard</h1>
   <p>AI-Verified Fair Hiring & Automated Payments</p>
-  <p class="tagline"><strong>Replacing trust with intelligence in the future of work</strong></p>
+  <p><strong>Replacing trust with intelligence in the future of work</strong></p>
 </header>
 
 <main>
@@ -204,21 +115,21 @@
   <h2>🌍 Problem Statement</h2>
   <p><strong>Fair Hiring Network – Future of Work</strong></p>
   <ul>
-    <li>Delayed or denied payments</li>
-    <li>Low-quality or copied work</li>
-    <li>Manual, biased dispute resolution</li>
-    <li>No automated trust mechanism</li>
+    <li>❌ Delayed or denied payments</li>
+    <li>❌ Low-quality or copied work</li>
+    <li>❌ Manual, biased dispute resolution</li>
+    <li>❌ No automated trust mechanism</li>
   </ul>
-  <p>Both freelancers and clients suffer in a <strong>trust-deficit system</strong>.</p>
+  <p>Both freelancers and clients operate in a <strong>trust-deficit system</strong>.</p>
 </section>
 
 <section>
   <h2>💡 Solution – What is FreelanceGuard?</h2>
   <ul>
-    <li>💰 Client payment <strong>secured first</strong></li>
-    <li>🤖 Work <strong>verified by AI</strong></li>
-    <li>⚙️ Decisions <strong>automated using n8n</strong></li>
-    <li>⏱ Freelancers protected via <strong>24-hour auto-release</strong></li>
+    <li>💰 Client payment is <strong>secured first</strong></li>
+    <li>🤖 Work is <strong>verified by AI</strong></li>
+    <li>⚙️ Decisions are <strong>automated using n8n</strong></li>
+    <li>⏱ Freelancers are protected via <strong>24-hour auto-release</strong></li>
   </ul>
   <div class="highlight">
     No disputes. No manual trust. No cheating.
@@ -237,9 +148,9 @@ Zynd AI verifies work
 AI Decision Engine (n8n)
         ↓
 Outcome:
-• APPROVED   → Auto release after 24h
+• APPROVED → Auto release after 24h
 • NEEDS_REVIEW → Payment on hold
-• REJECTED    → Payment not released
+• REJECTED → Payment not released
   </pre>
 </section>
 
@@ -256,14 +167,38 @@ Outcome:
 <section>
   <h2>🧩 n8n Workflow – Nodes Used</h2>
   <table>
-    <tr><th>Node</th><th>Purpose</th></tr>
-    <tr><td>X402 Webhook</td><td>Paid entry point</td></tr>
-    <tr><td>Zynd Agent Search</td><td>Select AI reviewer</td></tr>
-    <tr><td>HTTP Request (X402)</td><td>Send work to AI</td></tr>
-    <tr><td>IF Nodes</td><td>Decision logic</td></tr>
-    <tr><td>Wait (24h)</td><td>Auto-release safeguard</td></tr>
-    <tr><td>Edit Fields</td><td>Build response JSON</td></tr>
-    <tr><td>Respond to Webhook</td><td>Final output</td></tr>
+    <tr>
+      <th>Node</th>
+      <th>Purpose</th>
+    </tr>
+    <tr>
+      <td>X402 Webhook</td>
+      <td>Paid entry point</td>
+    </tr>
+    <tr>
+      <td>Zynd Agent Search</td>
+      <td>Select AI reviewer</td>
+    </tr>
+    <tr>
+      <td>HTTP Request (X402)</td>
+      <td>Send work to AI</td>
+    </tr>
+    <tr>
+      <td>IF Nodes</td>
+      <td>Decision logic</td>
+    </tr>
+    <tr>
+      <td>Wait (24h)</td>
+      <td>Auto-release safeguard</td>
+    </tr>
+    <tr>
+      <td>Edit Fields</td>
+      <td>Build response JSON</td>
+    </tr>
+    <tr>
+      <td>Respond to Webhook</td>
+      <td>Final output</td>
+    </tr>
   </table>
 </section>
 
@@ -290,17 +225,15 @@ Outcome:
 4. Activate workflow
 5. Trigger the X402 Webhook
   </pre>
-
-  <a href="#" class="btn-demo">Try Demo Workflow (coming soon)</a>
 </section>
 
 <section>
   <h2>🎯 Impact</h2>
   <ul>
-    <li>Prevents freelancer exploitation</li>
-    <li>Reduces hiring disputes by >90%</li>
-    <li>Automates trust using AI</li>
-    <li>Scalable for next-gen work platforms</li>
+    <li>✅ Prevents freelancer exploitation</li>
+    <li>✅ Reduces hiring disputes</li>
+    <li>✅ Automates trust using AI</li>
+    <li>✅ Scalable for future work platforms</li>
   </ul>
 </section>
 
@@ -314,7 +247,7 @@ Outcome:
 </main>
 
 <footer>
-  Built with ❤️ for the Future of Work • Hackathon Prototype • Inspired by n8n style
+  Built with ❤️ for the Future of Work • Hackathon Prototype
 </footer>
 
 </body>
