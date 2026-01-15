@@ -104,11 +104,7 @@
 
 <body>
 
-<header>
-  <h1>🚀 FreelanceGuard</h1>
-  <p>AI-Verified Fair Hiring & Automated Payments</p>
-  <p><strong>Replacing trust with intelligence in the future of work</strong></p>
-</header>
+
 
 <main>
 
