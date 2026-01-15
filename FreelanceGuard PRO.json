@@ -1,0 +1,354 @@
+{
+  "name": "FreelanceGuard PRO",
+  "nodes": [
+    {
+      "parameters": {
+        "serverWalletAddress": "0x0774fd3cC4B48279E4A4A356aD5a59d0E806a3b6",
+        "price": "$0.0001",
+        "options": {}
+      },
+      "type": "CUSTOM.zyndX402Webhook",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        -32
+      ],
+      "id": "14b1b967-44e9-480f-9419-719322d30d7e",
+      "name": "Payment Trigger (X402)",
+      "webhookId": "34eb432f-e5a6-437e-9a29-528f7f3ad555"
+    },
+    {
+      "parameters": {
+        "agentKeyword": "code-review",
+        "capabilities": [
+          "plagiarism-detection    ",
+          "code-quality",
+          "requirement-analysis"
+        ]
+      },
+      "type": "CUSTOM.zyndAgentSearch",
+      "typeVersion": 1,
+      "position": [
+        -144,
+        -32
+      ],
+      "id": "c9b0a9bc-5acc-402b-8241-75405265d8cf",
+      "name": "AI Reviewer (Zynd)",
+      "credentials": {
+        "web3wallet": {
+          "id": "AEZKbqTQv19gkstn",
+          "name": "Web3 Wallet Credentials account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=",
+        "method": "POST",
+        "sendBody": true,
+        "jsonBody": "={\n  \"agentId\": \"{{ $node['AI Reviewer (Zynd)'].json.id }}\",\n  \"input\": {\n    \"repo\": \"{{ $node['Payment Trigger (X402)'].json.repo }}\",\n    \"requirements\": \"{{ $node['Payment Trigger (X402)'].json.requirements }}\"\n  }\n}\n",
+        "sendHeaders": true,
+        "headers": {
+          "parameter": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        }
+      },
+      "type": "CUSTOM.zyndHttpRequestX402",
+      "typeVersion": 1,
+      "position": [
+        80,
+        -32
+      ],
+      "id": "2cfd67b2-0b99-4518-984d-313336070da2",
+      "name": "AI Decision Request",
+      "credentials": {
+        "web3wallet": {
+          "id": "AEZKbqTQv19gkstn",
+          "name": "Web3 Wallet Credentials account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "06aa1379-cd9d-449d-a239-89e8312c3422",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "pass",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        288,
+        -32
+      ],
+      "id": "b58e790e-db3f-469d-ae3d-bb6275d7a9c6",
+      "name": "AI Approved?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8cc36f1d-edab-4a97-8c1d-a0f51dee002c",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "fail",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        528,
+        128
+      ],
+      "id": "b4a30894-06cc-4be5-84ed-7c819909b282",
+      "name": "Client Review Required?"
+    },
+    {
+      "parameters": {
+        "amount": 24,
+        "unit": "hours"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        512,
+        -80
+      ],
+      "id": "87b54695-a7a6-42ed-bcbc-aec36b3455de",
+      "name": "Wait 24 Hours (Auto Release)",
+      "webhookId": "cdf2d6d1-5266-4f8e-9621-0694cfd84b7e"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"paymentStatus\": \"AUTO_RELEASED\",\n  \"decision\": \"APPROVED\",\n  \"reason\": \"AI approved, auto released after 24h\",\n  \"releaseType\": \"AUTO\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        752,
+        -80
+      ],
+      "id": "bb8a001e-6624-4e81-b20f-348e2ec874a9",
+      "name": "Build Auto Release Response"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"paymentStatus\": \"HOLD\",\n  \"decision\": \"NEEDS_REVIEW\",\n  \"reason\": \"AI found issues, client review required\",\n  \"releaseType\": \"MANUAL\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        752,
+        96
+      ],
+      "id": "ba63fb28-356d-4939-893c-40813dc03fac",
+      "name": "Build Needs Review Response"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"paymentStatus\": \"NOT_RELEASED\",\n  \"decision\": \"REJECTED\",\n  \"reason\": \"AI rejected the work\",\n  \"releaseType\": \"NONE\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        752,
+        288
+      ],
+      "id": "7fc40dfb-178d-4c3f-9efa-6c3ffb934520",
+      "name": "Build Rejection Response"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}\n",
+        "options": {}
+      },
+      "type": "CUSTOM.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        992,
+        96
+      ],
+      "id": "608e267c-5f19-49d9-bf53-a96731dfea89",
+      "name": "Send Final Response"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Payment Trigger (X402)": {
+      "main": [
+        [
+          {
+            "node": "AI Reviewer (Zynd)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Reviewer (Zynd)": {
+      "main": [
+        [
+          {
+            "node": "AI Decision Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Decision Request": {
+      "main": [
+        [
+          {
+            "node": "AI Approved?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Approved?": {
+      "main": [
+        [
+          {
+            "node": "Wait 24 Hours (Auto Release)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Client Review Required?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Client Review Required?": {
+      "main": [
+        [
+          {
+            "node": "Build Needs Review Response",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build Rejection Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait 24 Hours (Auto Release)": {
+      "main": [
+        [
+          {
+            "node": "Build Auto Release Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Auto Release Response": {
+      "main": [
+        [
+          {
+            "node": "Send Final Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Needs Review Response": {
+      "main": [
+        [
+          {
+            "node": "Send Final Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Rejection Response": {
+      "main": [
+        [
+          {
+            "node": "Send Final Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "42872516-eea4-4c26-a77a-26a6a675bcb1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4e68c90457b8c1f9f36c8ad90ab4f9d74ea209de7b74d597c65a764a0b158129"
+  },
+  "id": "zUYR7E_y0F6DYV4sds1gV",
+  "tags": [
+    {
+      "name": "Prototype v1",
+      "id": "dNSA49I60sI6PLHk",
+      "updatedAt": "2026-01-15T13:20:32.172Z",
+      "createdAt": "2026-01-15T13:20:32.172Z"
+    }
+  ]
+}
